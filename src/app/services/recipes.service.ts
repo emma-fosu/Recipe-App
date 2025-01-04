@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { Recipe } from '../../models/recipe.model';
 
 
@@ -15,5 +15,17 @@ export class RecipesService {
   recipes$ = this.http.get<Recipe[]>(`${BASE_PATH}/recipes`).pipe(
     catchError(() => of([]))
   );
+
+  private recipesFilterSubject$ =  new BehaviorSubject<Recipe>(<Recipe>{title: ""});
+  recipesFilterAction$ = this.recipesFilterSubject$.asObservable();
+
   constructor() { }
+
+  updateFilter(criteria: Recipe) {
+    this.recipesFilterSubject$.next(criteria);
+  }
+
+  clearFilter() {
+    this.recipesFilterSubject$.next(<Recipe>{title: ''});
+  }
 }
