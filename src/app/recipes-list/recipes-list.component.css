@@ -1,3 +1,11 @@
+.list-container {
+  /* positioning styles */
+  display: grid;
+  grid-template-columns: minmax(200px, 450px) 1fr;
+  column-gap: 15px;
+}
+
+
 .items-container {
   --row-gap: 20px;
   --col-gap: 20px;

@@ -1,0 +1,72 @@
+.filter-form-container {
+   
+
+}
+
+.filters-group {
+    /* positioning styles */
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+        padding-inline:10px 30px;
+        padding-block: 20px;
+}
+
+.field input {
+    /* positioning style */
+    display: block;
+    width: 100%;
+    /* main style */
+    
+}
+
+.filter-button {
+    /* position style */
+    align-self: flex-end;
+}
+
+button {
+    
+    /* main style */
+    --background-color: rgb(198, 198, 198);
+    --color: black;
+    padding-inline: 8px;
+    padding-block: 5px;
+
+    border-radius: 5px; 
+    border: none;
+
+    text-transform: capitalize;
+    font-weight: 500;
+
+    background-color: var(--background-color);
+    color: var(--color);
+    box-shadow: 2px 2px 5px var(--background-color);
+
+    cursor: pointer;
+
+
+    /* animation style */
+    
+}
+
+button:hover {
+    --h-background-color: color-mix(in hsl, var(--background-color), white 15%);
+    background-color: var(--h-background-color);
+    box-shadow: 2px 2px 5px var(--h-background-color);
+}
+
+button:active {
+    --a-background-color: color-mix(in hsl, var(--background-color), rgba(0, 0, 0, 0.959) 15%);
+    background-color: var(--a-background-color);
+    box-shadow: 2px 2px 5px var(--a-background-color);
+    scale: 0.9;
+
+    /* animation style */
+}
+
+.update-button {
+    --background-color: rgb(109, 109, 235);
+    --color: white;
+}
+

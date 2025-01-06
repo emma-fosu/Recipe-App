@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject} from '@angular/core';
 import { RecipesService } from '../services/recipes.service';
 import { Recipe } from '../../models/recipe.model';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DataViewModule } from 'primeng/dataview';
-import { Observable } from 'rxjs';
+
+import { combineLatest, Observable, map } from 'rxjs';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { IconFieldModule } from 'primeng/iconfield';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { RecipeFilterComponent } from '../recipe-filter/recipe-filter.component';
 
 @Component({
   selector: 'app-recipes-list',
@@ -19,6 +19,7 @@ import { ButtonModule } from 'primeng/button';
     FormsModule,
     ButtonModule,
     NgOptimizedImage,
+    RecipeFilterComponent,
   ],
   templateUrl: './recipes-list.component.html',
   styleUrl: './recipes-list.component.css',
@@ -28,6 +29,13 @@ export class RecipesListComponent {
 
   private recipesService = inject(RecipesService);
   recipes$: Observable<Recipe[]> = this.recipesService.recipes$;
+  private recipesFilterAction$ = this.recipesService.recipesFilterAction$;
+  filteredRecipes$ = combineLatest([this.recipes$, this.recipesFilterAction$]).pipe(
+    map(([recipes, filter]: [Recipe[], Recipe]) => {
+      const filterCriteria = filter.title.toLowerCase() ?? "";
+      return recipes.filter((recipes) => recipes.title?.toLowerCase().includes(filterCriteria));
+    })
+  )
 
   constructor() {}
 }

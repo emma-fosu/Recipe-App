@@ -1,5 +1,5 @@
 <!-- Recipe List Component -->
-@if(recipes$ | async; as recipes) {
+@if(filteredRecipes$ | async; as recipes) {
   <ng-container [ngTemplateOutlet]="items_tmp" [ngTemplateOutletContext]="{recipes: recipes}"/>
 
 }
@@ -17,33 +17,41 @@
 </ng-template>
 
 <ng-template let-recipes="recipes" #items_tmp>
-  <p>{{recipes.length}} Results</p>
-  <div class="items-container">
-    @for(recipe of recipes; track recipe.id) {
-      <div class="recipe-item">
-        <div class="recipe-item-top">
-          <div>
-             <i class="pi pi-tag recipe-category-icon"></i>
-            <span class="recipe-category">{{recipe.category}}</span>
+  <div class="list-container">
+    <div class="filter-container">
+      <app-recipe-filter />
+    </div>
+    <div class="main-items-container">
+      <p class="result-count">{{recipes.length}} Results</p>
+      <div class="items-container">
+        @for(recipe of recipes; track recipe.id) {
+        <div class="recipe-item">
+          <div class="recipe-item-top">
+            <div>
+              <i class="pi pi-tag recipe-category-icon"></i>
+              <span class="recipe-category">{{recipe.category}}</span>
+            </div>
+          </div>
+          <div class="recipe-item-content">
+            <div class="recipe-image-cont" style="position: relative; width: auto; aspect-ratio: 9/6;">
+              <img class="recipe-image" style="object-fit: cover;" fill [ngSrc]="'recipes/'+recipe.imageUrl"
+                [alt]="recipe.title" priority />
+            </div>
+            <div class="recipe-name">{{recipe?.title}}</div>
+            <div class="recipe-description">{{recipe?.title}}</div>
+            <p-rating class="recipe-rating" [ngModel]="recipe.rating" [readonly]="true">
+            </p-rating>
+          </div>
+          <div class="recipe-item-bottom">
+            <span class="recipe-prep-time">{{recipe?.prepTime}}min</span>
+            <p-button class="recipe-favourite" icon="pi pi-heart"></p-button>
           </div>
         </div>
-        <div class="recipe-item-content">
-          <div class="recipe-image-cont" style="position: relative; width: auto; aspect-ratio: 9/6;">
-            <img class="recipe-image" style="object-fit: cover;" fill [ngSrc]="'recipes/'+recipe.imageUrl" [alt]="recipe.title" priority/>
-          </div>
-          <div class="recipe-name">{{recipe?.title}}</div>
-          <div class="recipe-description">{{recipe?.title}}</div>
-          <p-rating class="recipe-rating" [ngModel]="recipe.rating" [readonly]="true">
-          </p-rating>
-        </div>
-        <div class="recipe-item-bottom">
-          <span class="recipe-prep-time">{{recipe?.prepTime}}min</span>
-          <p-button class="recipe-favourite" icon="pi pi-heart"></p-button>
-        </div>
+        }@empty {
+        <ng-container [ngTemplateOutlet]="no_items_temp"></ng-container>
+        }
       </div>
-    }@empty {
-      <ng-container [ngTemplateOutlet]="no_items_temp"></ng-container>
-    }
+    </div>
   </div>
 </ng-template>
 <!-- ---------- -->
