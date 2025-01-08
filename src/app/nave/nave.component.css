@@ -1,0 +1,54 @@
+nav {
+    /* main styles */
+    background-color: rgb(242, 115, 115);
+    padding-inline: 25px;
+    padding-block: 10px;
+    border-radius: 1000px;
+    box-shadow: 2px 3px 10px rgba(223, 128, 128, 0.733);
+}
+
+nav ul {
+    /* positioning styles */
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+
+}
+
+nav ul li {
+    /* main styles */
+    list-style: none;
+}
+
+nav ul li:nth-of-type(2) {
+    /* positioning styles */
+    margin-inline-start: auto;
+}
+
+nav ul li:not(.logo, .profile) a {
+    /* main styles */
+    color: white;
+    text-decoration: none;
+    padding-inline: 6px;
+    padding-block: 6px;
+    border-radius: 4px;
+    background-color: transparent;
+
+    /* animation styles */
+    transition: background-color 300ms ease-in-out,
+                color 200ms ease-in;
+}
+
+nav ul li:not(.logo, .profile) a:hover {
+    /* main styles */
+    cursor: pointer;
+    background-color: rgb(113, 113, 226);
+}
+
+nav ul li:not(.logo, .profile) a.active {
+    /* main styles */
+    color: black;
+    background-color: rgb(138, 242, 138);
+}
+
+
