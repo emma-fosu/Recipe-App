@@ -17,7 +17,9 @@ export class RecipesService {
   );
 
   private recipesFilterSubject$ =  new BehaviorSubject<Recipe>(<Recipe>{title: ""});
+
   recipesFilterAction$ = this.recipesFilterSubject$.asObservable();
+
 
   constructor() { }
 
@@ -27,5 +29,9 @@ export class RecipesService {
 
   clearFilter() {
     this.recipesFilterSubject$.next(<Recipe>{title: ''});
+  }
+
+  saveRecipe(recipe: Recipe): Observable<Recipe> {
+    return this.http.post<Recipe>(`${BASE_PATH}/recipes`, recipe);
   }
 }
