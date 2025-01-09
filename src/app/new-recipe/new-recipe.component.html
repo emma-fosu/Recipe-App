@@ -1,5 +1,5 @@
 <ng-container *ngIf="saveRecipes$ | async"></ng-container>
-
+<ng-container *ngIf="saveRecipe$ | async"></ng-container>
 <h1>New Recipe</h1>
 <form [formGroup]="formGroup">
 
@@ -19,11 +19,13 @@
 
         <div class="col-3">
             <label for="Tags">Tags</label>
-            @for (tag of tags; track $index) {
-                <div class="tag-input">
-                    <input type="radio" formControlName="tags" [id]="tag.key" [value]="tag"/>
-                    <label [for]="tag.key">{{tag.name}}</label>
-                </div>
+            @if(searchedTags$ | async; as tags) {
+                <p-autoComplete 
+                    formControlName="tags" 
+                    [suggestions]="tags" 
+                    (completeMethod)="updateTerm($event.query)"
+                    field="name" id="Tags">
+                </p-autoComplete>
             }
         </div>
     </div>
@@ -67,5 +69,5 @@
 </form>
 
 <div class="right-actions-panel">
-    <!-- An update button should be here -->
+    <button class="save-button" (click)="saveRecipe()">save</button>
 </div>
