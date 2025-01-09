@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
-import { Recipe } from '../../models/recipe.model';
+import { Recipe, Tag } from '../../models/recipe.model';
 
 
 const BASE_PATH = environment.basePath;
@@ -17,7 +17,14 @@ export class RecipesService {
   );
 
   private recipesFilterSubject$ =  new BehaviorSubject<Recipe>(<Recipe>{title: ""});
+  searchTag$ = (criteria: string) => this.http.get<Tag[]>(`${BASE_PATH}/tags`, {
+    params: {
+      criteria: criteria
+    }
+  })
+
   recipesFilterAction$ = this.recipesFilterSubject$.asObservable();
+
 
   constructor() { }
 
@@ -27,5 +34,9 @@ export class RecipesService {
 
   clearFilter() {
     this.recipesFilterSubject$.next(<Recipe>{title: ''});
+  }
+
+  saveRecipe(recipe: Recipe): Observable<Recipe> {
+    return this.http.post<Recipe>(`${BASE_PATH}/recipes`, recipe);
   }
 }
