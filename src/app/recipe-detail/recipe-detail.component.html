@@ -1,0 +1,19 @@
+@if (recipe$|async;as recipe) {
+<!-- <div>
+    <div></div>
+    <span> {{recipe.title}} </span>
+    <span> {{recipe.steps}} </span>
+    <span> {{recipe.ingredients}} </span>
+</div> -->
+<section>
+    <h2>{{recipe.title}}</h2>
+    <div class="recipe-s">
+        <h3>Steps</h3>
+        <p>{{recipe.steps}}</p>
+    </div>
+    <div class="recipe-i">
+        <h3>Ingredients</h3>
+        <p>{{recipe.ingredients}}</p>
+    </div>
+</section>
+}
