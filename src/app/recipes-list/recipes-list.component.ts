@@ -9,6 +9,8 @@ import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { RecipeFilterComponent } from '../recipe-filter/recipe-filter.component';
+import { SharedDataService } from '../services/shared-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipes-list',
@@ -28,6 +30,9 @@ import { RecipeFilterComponent } from '../recipe-filter/recipe-filter.component'
 export class RecipesListComponent {
 
   private recipesService = inject(RecipesService);
+  private sharedDataService =  inject(SharedDataService);
+  private routerService =  inject(Router);
+
   recipes$: Observable<Recipe[]> = this.recipesService.recipes$;
   private recipesFilterAction$ = this.recipesService.recipesFilterAction$;
   filteredRecipes$ = combineLatest([this.recipes$, this.recipesFilterAction$]).pipe(
@@ -38,4 +43,9 @@ export class RecipesListComponent {
   )
 
   constructor() {}
+
+  editRecipe(recipe: Recipe): void {
+    this.sharedDataService.updateRecipe(recipe);
+    this.routerService.navigate(["/detail"])
+  }
 }
